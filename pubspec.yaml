@@ -13,7 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
   master_router_annotation:
-    path: ../master_router_annotation/
+    git:
+      url: https://github.com/troyanskiy/master_router_annotation.git
+      ref: master
 
 dev_dependencies:
   flutter_test:
