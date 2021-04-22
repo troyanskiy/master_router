@@ -1,9 +1,14 @@
 part of '../main.dart';
 
-typedef MasterRouteBuilder = Widget
-    Function(
+typedef MasterRouteWidgetBuilder = Widget Function(
   BuildContext context,
-    MasterRouteParamsAbstract? params,
+  MasterRouteParamsAbstract? params,
+);
+
+typedef MasterRoutePageRouteBuilder = Route Function(
+  BuildContext context,
+  RouteSettings settings,
+  WidgetBuilder widgetBuilder,
 );
 
 typedef MasterRouteParamsBuilder<T extends MasterRouteParamsAbstract?> = T
@@ -14,7 +19,10 @@ typedef MasterRouteParamsBuilder<T extends MasterRouteParamsAbstract?> = T
 
 class MasterRoute {
   final MasterRouteParamsBuilder? paramsBuilder;
-  final MasterRouteBuilder builder;
+  final MasterRoutePageRouteBuilder? pageRouteBuilder;
+  final MasterRouteWidgetBuilder builder;
+  final MasterRouteTransition transition;
+  final Duration? transitionDuration;
   final bool? fullscreenDialog;
 
   final List<MasterRoute>? subRoutes;
@@ -37,7 +45,10 @@ class MasterRoute {
   MasterRoute({
     required String path,
     required this.builder,
+    this.pageRouteBuilder,
     this.paramsBuilder,
+    this.transition = MasterRouteTransition.Default,
+    this.transitionDuration,
     this.fullscreenDialog,
     this.subRoutes,
     String? name,

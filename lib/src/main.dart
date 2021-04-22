@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+part 'helpers/master_route_transitions.dart';
+
 part 'master_route_information_parser.dart';
 
 part 'master_router.dart';

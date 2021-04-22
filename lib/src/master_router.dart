@@ -107,7 +107,9 @@ class MasterRouter {
   ///
   Future<T?> pushNamed<T extends Object?>(
     String routeName, {
-        MasterRouteParamsAbstract? arguments,
+    MasterRouteParamsAbstract? arguments,
+    bool? removeBelow,
+    int? removeLast,
   }) {
     final route = _routesMapNamed[routeName];
 
@@ -117,7 +119,11 @@ class MasterRouter {
 
     final config = MasterRouteConfig<T>(route: route, params: arguments);
 
-    routerDelegate.push(config);
+    routerDelegate.push(
+      config,
+      removeBelow: removeBelow ?? false,
+      removeLast: removeLast,
+    );
 
     return config._popCompleter.future;
   }
@@ -145,38 +151,6 @@ class MasterRouter {
     pop(result);
     return pushNamed(routeName, arguments: arguments);
   }
-
-  ///
-  /// Push Replacement Named
-  ///
-  // Future<T?> pushReplacementNamed<T extends Object?, TO extends Object?>(
-  //   String routeName, {
-  //   TO? result,
-  //   Object? arguments,
-  // }) {
-  //   return navigator.pushReplacementNamed<T, TO>(
-  //     _prepareRoute(routeName, arguments),
-  //     result: result,
-  //     arguments: arguments,
-  //   );
-  // }
-
-  ///
-  /// Prepare the route
-  ///
-  // String _prepareRoute(String routeName, Object? arguments) {
-  //   MasterRoute? route = _routesMapNamed[routeName];
-  //
-  //   if (route == null) {
-  //     route = _routes.firstWhere((r) => r.isAny);
-  //   }
-  //
-  //   if (arguments is MasterRouteParamsAbstract) {
-  //     return route._getRouteLocation(arguments);
-  //   }
-  //
-  //   return route.path;
-  // }
 
   ///
   /// Get route config

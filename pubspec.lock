@@ -63,9 +63,11 @@ packages:
   master_router_annotation:
     dependency: "direct main"
     description:
-      path: "../master_router_annotation"
-      relative: true
-    source: path
+      path: "."
+      ref: master
+      resolved-ref: "4cc122bb36357b600a374547df831e0bbd62f93a"
+      url: "https://github.com/troyanskiy/master_router_annotation.git"
+    source: git
     version: "0.0.1"
   matcher:
     dependency: transitive
