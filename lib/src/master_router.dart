@@ -175,16 +175,4 @@ class MasterRouter {
     }
   }
 
-  ///
-  /// Route factory
-  ///
-// Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-//   for (final route in _routes) {
-//     final routeWidget = route._getRoute(settings);
-//
-//     if (routeWidget != null) {
-//       return routeWidget;
-//     }
-//   }
-// }
 }
