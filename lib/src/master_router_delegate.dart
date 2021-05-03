@@ -39,11 +39,11 @@ class MasterRouterDelegate extends RouterDelegate<MasterRouteConfig>
   MasterRouteConfig? get currentConfiguration =>
       _routeConfigs.isEmpty ? null : _routeConfigs.last;
 
-
   Future<void> push(
     MasterRouteConfig configuration, {
     bool removeBelow = false,
     int? removeLast,
+    MasterRoutePredicate? removeUntilPredicate,
   }) async {
     if (removeBelow) {
       _routeConfigs.forEach((c) => c._popCompleter.complete(null));
@@ -51,8 +51,12 @@ class MasterRouterDelegate extends RouterDelegate<MasterRouteConfig>
     } else if (removeLast != null) {
       int removeLastCount = removeLast;
       while (removeLastCount-- > 0) {
-        _routeConfigs.last._popCompleter.complete(null);
-        _routeConfigs.removeLast();
+        removeLastRoute();
+      }
+    } else if (removeUntilPredicate != null) {
+      while (_routeConfigs.isNotEmpty &&
+          !removeUntilPredicate(_routeConfigs.last)) {
+        removeLastRoute();
       }
     }
 
@@ -107,5 +111,10 @@ class MasterRouterDelegate extends RouterDelegate<MasterRouteConfig>
     } else {
       _routeConfigs = _routeConfigs.sublist(0, locationIndex + 1);
     }
+  }
+
+  void removeLastRoute() {
+    _routeConfigs.last._popCompleter.complete(null);
+    _routeConfigs.removeLast();
   }
 }

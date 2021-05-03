@@ -31,12 +31,12 @@ class MasterRoute {
 
   bool get isAny => _isAny;
 
-  late bool _isAny;
+  bool _isAny;
 
-  late String _name;
-  late String _path;
+  String _name;
+  String _path;
 
-  late List<_RouteSegment> _routeSegments;
+  List<_RouteSegment> _routeSegments = const [];
 
   String get path => _path;
 
@@ -52,13 +52,9 @@ class MasterRoute {
     this.fullscreenDialog,
     this.subRoutes,
     String? name,
-  }) {
-    _path = path;
-
-    _isAny = path == '**';
-
-    _name = name ?? path;
-  }
+  })  : _path = path,
+        _isAny = path == '**',
+        _name = name ?? path;
 
   ///
   /// Init route with parent route

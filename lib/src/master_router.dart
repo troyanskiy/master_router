@@ -1,6 +1,7 @@
 part of 'main.dart';
 
-// typedef MasterRouteConfigPredicate = bool Function(MasterRouteConfig config);
+typedef MasterRoutePredicate = bool Function(
+    MasterRouteConfig<dynamic> routeConfig);
 
 class MasterRouter {
   static MasterRouter? _instance;
@@ -110,6 +111,7 @@ class MasterRouter {
     MasterRouteParamsAbstract? arguments,
     bool? removeBelow,
     int? removeLast,
+    MasterRoutePredicate? removeUntilPredicate,
   }) {
     final route = _routesMapNamed[routeName];
 
@@ -123,9 +125,22 @@ class MasterRouter {
       config,
       removeBelow: removeBelow ?? false,
       removeLast: removeLast,
+      removeUntilPredicate: removeUntilPredicate,
     );
 
     return config._popCompleter.future;
+  }
+
+  Future<T?> pushNamedAndRemoveUntil<T>(
+    String routeName,
+    MasterRoutePredicate removeUntilPredicate, {
+    MasterRouteParamsAbstract? arguments,
+  }) {
+    return pushNamed<T>(
+      routeName,
+      removeUntilPredicate: removeUntilPredicate,
+      arguments: arguments,
+    );
   }
 
   ///
@@ -174,5 +189,4 @@ class MasterRouter {
       }
     }
   }
-
 }
